@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import authConfig from './config/auth.config';
+import databaseConfig from './config/database.config';
+import appConfig from './config/app.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PatientModule } from './patient/patient.module';
 import { UserModule } from './user/user.module';
@@ -17,7 +19,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env'],
-      load: [authConfig],
+      load: [authConfig, databaseConfig, appConfig],
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
