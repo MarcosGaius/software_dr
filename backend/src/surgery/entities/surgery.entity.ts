@@ -15,6 +15,7 @@ import { Structure } from '../enums/structure.enum';
 import { Contralateral } from '../enums/contralateral.enum';
 import { Limitation } from '../enums/limitation.enum';
 import { Patient } from 'src/patient/entities/patient.entity';
+import { SuturaMeniscal } from 'src/procedure/entity/sutura-meniscal.entity';
 
 @Entity()
 export class Surgery {
@@ -69,4 +70,7 @@ export class Surgery {
 
   @OneToOne(() => Meniscectomia, (meniscectomia) => meniscectomia.surgery)
   meniscectomiaProcedure: Meniscectomia;
+
+  @OneToOne(() => SuturaMeniscal, (suturaMeniscal) => suturaMeniscal.surgery)
+  suturaMeniscalProcedure: SuturaMeniscal;
 }
