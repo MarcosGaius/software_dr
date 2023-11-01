@@ -1,7 +1,6 @@
 export enum SutureVariation {
-
-  AllInside = 'Precision',
-  OutSide =  'Fast-fix',
-  Parcial = 'Parcial',
-  Total =  'Total',
+  Precision = 'precision',
+  FastFix =  'fast-fix',
+  Partial = 'parcial',
+  Total =  'total',
 }

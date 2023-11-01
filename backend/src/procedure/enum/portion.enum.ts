@@ -1,6 +1,6 @@
 export enum Portion {
-  AnteriorHorn = 'Corno Anterior',
-  MeniscusBody = 'Corpo do Menisco',
-  ParameniscalCyst = 'Cisto Parameniscal',
-  PosteriorHorn = 'Corno Posterior',
+  AnteriorHorn = 'corno-anterior',
+  MeniscusBody = 'corpo-menisco',
+  ParameniscalCyst = 'cisto-parameniscal',
+  PosteriorHorn = 'corno-posterior',
 }

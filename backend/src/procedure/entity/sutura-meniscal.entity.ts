@@ -1,21 +1,13 @@
 import { PrimaryGeneratedColumn, Entity, Column, OneToOne } from 'typeorm';
 import { Surgery } from '../../surgery/entities/surgery.entity';
-import { ProcedureType } from '../enum/procedureType.enum';
-import { RelativePosition } from '../enum/relativePosition.enum';
 import { Portion } from '../enum/portion.enum';
 import { SutureVariation } from '../enum/sutureVariation.enum';
-
+import { EntityHelper } from 'src/utils/entity-helper';
 
 @Entity()
-export class SuturaMeniscal {
+export class SuturaMeniscal extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  type: ProcedureType;
-
-  @Column()
-  relativePosition: RelativePosition;
 
   @Column()
   portion: Portion;

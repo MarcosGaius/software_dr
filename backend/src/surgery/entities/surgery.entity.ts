@@ -16,9 +16,10 @@ import { Contralateral } from '../enums/contralateral.enum';
 import { Limitation } from '../enums/limitation.enum';
 import { Patient } from 'src/patient/entities/patient.entity';
 import { SuturaMeniscal } from 'src/procedure/entity/sutura-meniscal.entity';
+import { EntityHelper } from 'src/utils/entity-helper';
 
 @Entity()
-export class Surgery {
+export class Surgery extends EntityHelper {
   // General info below:
 
   @PrimaryGeneratedColumn()

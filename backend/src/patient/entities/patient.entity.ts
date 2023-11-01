@@ -1,4 +1,5 @@
 import { Surgery } from 'src/surgery/entities/surgery.entity';
+import { EntityHelper } from 'src/utils/entity-helper';
 import {
   Column,
   Entity,
@@ -9,7 +10,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Patient {
+export class Patient extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;
 
