@@ -11,6 +11,7 @@ import { SurgeryModule } from './surgery/surgery.module';
 import { ProcedureModule } from './procedure/procedure.module';
 import { TypeOrmConfigService } from './database/typeorm-config.service';
 import { DataSource, DataSourceOptions } from 'typeorm';
+import { ClassificationModule } from './classification/classification.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { DataSource, DataSourceOptions } from 'typeorm';
     UserModule,
     SurgeryModule,
     ProcedureModule,
+    ClassificationModule,
   ],
 })
 export class AppModule {}

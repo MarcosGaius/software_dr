@@ -1,3 +1,4 @@
+import { Classification } from 'src/classification/entities/classification.entity';
 import { Surgery } from 'src/surgery/entities/surgery.entity';
 import { EntityHelper } from 'src/utils/entity-helper';
 import {
@@ -34,4 +35,7 @@ export class Patient extends EntityHelper {
 
   @OneToMany(() => Surgery, (surgery) => surgery.patient)
   surgeries: Surgery[];
+
+  @OneToMany(() => Classification, (classification) => classification.patient)
+  classifications: Classification[];
 }
