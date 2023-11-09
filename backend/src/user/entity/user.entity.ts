@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
 import { Exclude } from 'class-transformer';
 import { EntityHelper } from 'src/utils/entity-helper';
 import {

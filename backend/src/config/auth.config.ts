@@ -3,9 +3,9 @@ import { AuthConfig } from './config.type';
 
 export default registerAs<AuthConfig>('auth', () => {
   return {
-    secret: '',
-    refreshSecret: '',
-    expires: '',
-    refreshExpires: '',
+    secret: process.env.AUTH_JWT_SECRET,
+    expires: process.env.AUTH_JWT_TOKEN_EXPIRES_IN,
+    refreshSecret: process.env.AUTH_REFRESH_SECRET,
+    refreshExpires: process.env.AUTH_REFRESH_TOKEN_EXPIRES_IN,
   };
 });

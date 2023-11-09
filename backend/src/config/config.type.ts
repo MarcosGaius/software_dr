@@ -41,7 +41,7 @@ export type AppConfig = {
 };
 
 export type AllConfigType = {
+  app: AppConfig;
   auth: AuthConfig;
   database: DatabaseConfig;
-  app: AppConfig;
 };

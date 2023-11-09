@@ -18,6 +18,6 @@ export class SuturaMeniscal extends EntityHelper {
   @Column()
   sutureVariation: SutureVariation;
 
-  @OneToOne(() => Surgery, (surgery) => surgery.suturaMeniscalProcedure)
+  @OneToOne(() => Surgery)
   surgery: Surgery;
 }

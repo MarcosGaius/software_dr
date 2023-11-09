@@ -1,6 +1,8 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthRegisterDto } from './dto/register.dto';
+import { LoginDto } from './dto/login.dto';
+import { LoginResponseType } from './types/login-response.type';
 
 @Controller({
   path: 'auth',
@@ -12,5 +14,11 @@ export class AuthController {
   @Post('/register')
   register(@Body() createUserDto: AuthRegisterDto) {
     return this.authService.register(createUserDto);
+  }
+
+  @Post('login')
+  @HttpCode(HttpStatus.OK)
+  public adminLogin(@Body() loginDTO: LoginDto): Promise<LoginResponseType> {
+    return this.authService.validateLogin(loginDTO);
   }
 }

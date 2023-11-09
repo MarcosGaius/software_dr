@@ -27,6 +27,6 @@ export class Meniscectomia extends EntityHelper {
   @Column()
   injuryExtension: Extension;
 
-  @OneToOne(() => Surgery, (surgery) => surgery.meniscectomiaProcedure)
+  @OneToOne(() => Surgery)
   surgery: Surgery;
 }

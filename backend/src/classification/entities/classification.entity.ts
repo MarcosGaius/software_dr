@@ -6,6 +6,7 @@ import {
   UpdateDateColumn,
   ManyToOne,
   OneToOne,
+  JoinColumn,
 } from 'typeorm';
 
 import { EntityHelper } from 'src/utils/entity-helper';
@@ -37,17 +38,22 @@ export class Classification extends EntityHelper {
   // Specific classifications below:
 
   @OneToOne(() => Anderson2011MeniscusLesionClassification)
+  @JoinColumn()
   anderson2011MeniscusLesion: Anderson2011MeniscusLesionClassification;
 
   @OneToOne(() => LaPrade2015MedialLateralMeniscusRootRupture)
+  @JoinColumn()
   laprade2015MedialLateralMeniscusRootRupture: LaPrade2015MedialLateralMeniscusRootRupture;
 
   @OneToOne(() => Nguyen2014MorphologyMeniscusLesion)
+  @JoinColumn()
   nguyen2014MorphologyMeniscusLesion: Nguyen2014MorphologyMeniscusLesion;
 
   @OneToOne(() => RampMeniscusLesionClassification)
+  @JoinColumn()
   rampMeniscusLesion: RampMeniscusLesionClassification;
 
   @OneToOne(() => ThaunatGreifClassification)
+  @JoinColumn()
   thaunatGreif: ThaunatGreifClassification;
 }

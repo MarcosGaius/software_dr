@@ -18,7 +18,7 @@ import { ClassificationModule } from './classification/classification.module';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env'],
-      load: [authConfig, databaseConfig, appConfig],
+      load: [databaseConfig, appConfig, authConfig],
     }),
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,

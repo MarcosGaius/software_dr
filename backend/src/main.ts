@@ -8,9 +8,11 @@ import {
   VersioningType,
 } from '@nestjs/common';
 import validationOptions from './utils/validation-options';
+import { useContainer } from 'class-validator';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
   const configService = app.get(ConfigService<AllConfigType>);
 
   app.setGlobalPrefix(

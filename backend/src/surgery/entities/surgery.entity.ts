@@ -7,6 +7,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { Member } from '../enums/member.enum';
 import { MemberPosition } from '../enums/memberPos.enum';
@@ -40,10 +41,10 @@ export class Surgery extends EntityHelper {
   @Column()
   contralateral: Contralateral;
 
-  @Column({ nullable: true, default: [] })
+  @Column('text', { array: true, default: [], nullable: true })
   limitations: Limitation[];
 
-  @Column({ nullable: true, default: [] })
+  @Column('text', { array: true, default: [], nullable: true })
   complaints: string[]; // no dto, tratar o texto com as primeiras letras em maiúsculo
 
   @Column({ nullable: true })
@@ -69,9 +70,11 @@ export class Surgery extends EntityHelper {
 
   // Procedures below:
 
-  @OneToOne(() => Meniscectomia, (meniscectomia) => meniscectomia.surgery)
+  @OneToOne(() => Meniscectomia)
+  @JoinColumn()
   meniscectomiaProcedure: Meniscectomia;
 
-  @OneToOne(() => SuturaMeniscal, (suturaMeniscal) => suturaMeniscal.surgery)
+  @OneToOne(() => SuturaMeniscal)
+  @JoinColumn()
   suturaMeniscalProcedure: SuturaMeniscal;
 }
