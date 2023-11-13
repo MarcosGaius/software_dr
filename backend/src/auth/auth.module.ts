@@ -7,9 +7,21 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 import { AnonymousStrategy } from './strategies/anonymous.strategy';
+import { ConfigService } from '@nestjs/config';
+import { AllConfigType } from 'src/config/config.type';
 
 @Module({
-  imports: [UserModule, JwtModule.register({})],
+  imports: [
+    UserModule,
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService<AllConfigType>) => ({
+        secret: configService.getOrThrow('auth', {
+          infer: true,
+        }).secret,
+      }),
+    }),
+  ],
   controllers: [AuthController],
   providers: [
     IsNotExist,

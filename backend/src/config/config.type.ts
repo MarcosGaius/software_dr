@@ -1,3 +1,9 @@
+export enum Environment {
+  Development = 'development',
+  Production = 'production',
+  Test = 'test',
+}
+
 export type AuthConfig = {
   secret?: string;
   expires?: string;
@@ -21,12 +27,6 @@ export type DatabaseConfig = {
   key?: string;
   cert?: string;
 };
-
-export enum Environment {
-  Development = 'development',
-  Production = 'production',
-  Test = 'test',
-}
 
 export type AppConfig = {
   nodeEnv: Environment;

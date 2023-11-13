@@ -8,6 +8,7 @@ import { LoginDto } from './dto/login.dto';
 import { LoginResponseType } from './types/login-response.type';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
+import { AuthConfig } from 'src/config/config.type';
 
 @Injectable()
 export class AuthService {
@@ -68,11 +69,12 @@ export class AuthService {
   }
 
   private async getTokensData(data: { id: User['id'] }) {
-    const tokenExpiresIn = this.configService.getOrThrow('auth.expires', {
+    const authConfig = this.configService.get('auth', {
       infer: true,
-    });
+    }) as AuthConfig;
 
-    const tokenExpires = Date.now() + ms(tokenExpiresIn);
+    const tokenExpiresIn = authConfig.expires;
+    const tokenExpires = (Date.now() + ms(tokenExpiresIn)).toString();
 
     const [token, refreshToken] = await Promise.all([
       await this.jwtService.signAsync(
@@ -80,17 +82,13 @@ export class AuthService {
           id: data.id,
         },
         {
-          secret: this.configService.getOrThrow('auth.secret', { infer: true }),
+          secret: authConfig.secret,
           expiresIn: tokenExpiresIn,
         }
       ),
       await this.jwtService.signAsync({
-        secret: this.configService.getOrThrow('auth.refreshSecret', {
-          infer: true,
-        }),
-        expiresIn: this.configService.getOrThrow('auth.refreshExpires', {
-          infer: true,
-        }),
+        secret: authConfig.refreshSecret,
+        expiresIn: authConfig.refreshExpires,
       }),
     ]);
 

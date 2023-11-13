@@ -8,10 +8,6 @@ import { JwtPayloadType } from './types/jwt-payload.type';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(private configService: ConfigService) {
-    console.log(
-      " configService.get('auth.secret', { infer: true }):",
-      configService.get('auth', { infer: true })
-    );
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: configService.get('auth.secret', { infer: true }),
