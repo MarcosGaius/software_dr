@@ -16,8 +16,8 @@ export class UserService {
     return this.userRepository.save(
       this.userRepository.create({
         ...user,
-        firstname: user.firstName,
-        lastname: user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
       })
     );
   }

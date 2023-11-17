@@ -68,6 +68,52 @@ export class AuthService {
     };
   }
 
+  async refresh(
+    refreshToken: string
+  ): Promise<Omit<LoginResponseType, 'user'>> {
+    const invalidTokenError = new HttpException(
+      {
+        status: HttpStatus.BAD_REQUEST,
+        errors: {
+          refreshToken: 'Token inválido',
+        },
+      },
+      HttpStatus.BAD_REQUEST
+    );
+
+    if (!refreshToken) {
+      throw invalidTokenError;
+    }
+
+    const { sub } = await this.jwtService
+      .verifyAsync(refreshToken, {
+        secret: this.configService.get('auth.refreshSecret', {
+          infer: true,
+        }),
+      })
+      .catch(() => {
+        throw invalidTokenError;
+      });
+
+    const user = await this.usersService.findOne({
+      id: sub,
+    });
+
+    const {
+      token,
+      refreshToken: newRefreshToken,
+      tokenExpires,
+    } = await this.getTokensData({
+      id: user.id,
+    });
+
+    return {
+      token,
+      refreshToken: newRefreshToken,
+      tokenExpires,
+    };
+  }
+
   private async getTokensData(data: { id: User['id'] }) {
     const authConfig = this.configService.get('auth', {
       infer: true,
@@ -75,21 +121,32 @@ export class AuthService {
 
     const tokenExpiresIn = authConfig.expires;
     const tokenExpires = (Date.now() + ms(tokenExpiresIn)).toString();
+    const refreshTokenExpiresIn = authConfig.refreshExpires;
+    const refreshTokenExpires = (
+      Date.now() + ms(refreshTokenExpiresIn)
+    ).toString();
 
     const [token, refreshToken] = await Promise.all([
       await this.jwtService.signAsync(
         {
-          id: data.id,
+          expires: tokenExpires,
         },
         {
+          subject: String(data.id),
           secret: authConfig.secret,
           expiresIn: tokenExpiresIn,
         }
       ),
-      await this.jwtService.signAsync({
-        secret: authConfig.refreshSecret,
-        expiresIn: authConfig.refreshExpires,
-      }),
+      await this.jwtService.signAsync(
+        {
+          expires: refreshTokenExpires,
+        },
+        {
+          subject: String(data.id),
+          secret: authConfig.refreshSecret,
+          expiresIn: authConfig.refreshExpires,
+        }
+      ),
     ]);
 
     return {
