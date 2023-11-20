@@ -45,7 +45,7 @@ export class Surgery extends EntityHelper {
   limitations: Limitation[];
 
   @Column('text', { array: true, default: [], nullable: true })
-  complaints: string[]; // no dto, tratar o texto com as primeiras letras em maiúsculo
+  complaints: string[];
 
   @Column({ nullable: true })
   icd: string; // Classificaçào Internacional de Doenças

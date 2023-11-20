@@ -5,7 +5,7 @@ import {
   ValidationPipeOptions,
 } from '@nestjs/common';
 
-function recursiveErrorMessages(errors: ValidationError[]) {
+export function recursiveErrorMessages(errors: ValidationError[]) {
   return errors.reduce((accumulator, currentValue) => {
     const propertyErrors = {};
 
