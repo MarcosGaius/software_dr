@@ -3,6 +3,7 @@ import { ProcedureType } from '../enum/procedureType.enum';
 import { RelativePosition } from '../enum/relativePosition.enum';
 import { Portion } from '../enum/portion.enum';
 import { Zone } from '../enum/zone.enum';
+import { Extension } from '../enum/extension.enum';
 
 export class CreateMeniscectomiaProcedureDto {
   constructor(data) {
@@ -26,6 +27,6 @@ export class CreateMeniscectomiaProcedureDto {
   injuryRegion: Zone;
 
   @IsNotEmpty()
-  @IsEnum(ProcedureType)
-  injuryExtension: ProcedureType;
+  @IsEnum(Extension)
+  injuryExtension: Extension;
 }

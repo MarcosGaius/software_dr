@@ -6,15 +6,15 @@ import {
 } from 'class-validator';
 import { CreateMeniscectomiaProcedureDto } from 'src/procedure/dto/meniscectomia-procedure.dto';
 import { CreateSuturaMeniscalProcedureDto } from 'src/procedure/dto/sutura-meniscal-procedure.dto';
-import { Procedure } from 'src/procedure/enum/procedures.enum';
 import { ValidationError } from '@nestjs/common';
+import { Classification } from 'src/classification/enums/classificationType.enum';
 
-@ValidatorConstraint({ name: 'ProcedureTypeValidation', async: true })
-export class ProcedureTypeValidation implements ValidatorConstraintInterface {
+@ValidatorConstraint({ name: 'ClassificationValidation', async: true })
+export class ClassificationValidation implements ValidatorConstraintInterface {
   private errors;
   async validate(value: object, args: ValidationArguments) {
     switch (args.object['procedureType']) {
-      case Procedure.Meniscectomia:
+      case Classification.Nguyen2014MorphologyMeniscusLesion:
         return await validateOrReject(
           new CreateMeniscectomiaProcedureDto(value)
         )

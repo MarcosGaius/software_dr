@@ -18,6 +18,7 @@ import { Limitation } from '../enums/limitation.enum';
 import { Patient } from 'src/patient/entities/patient.entity';
 import { SuturaMeniscal } from 'src/procedure/entity/sutura-meniscal.entity';
 import { EntityHelper } from 'src/utils/entity-helper';
+import { Procedure } from 'src/procedure/enum/procedures.enum';
 
 @Entity()
 export class Surgery extends EntityHelper {
@@ -69,6 +70,9 @@ export class Surgery extends EntityHelper {
   patient: Patient;
 
   // Procedures below:
+
+  @Column({ enum: Procedure })
+  procedure: Procedure;
 
   @OneToOne(() => Meniscectomia)
   @JoinColumn()

@@ -1,9 +1,21 @@
-import { IsBoolean, IsEnum, IsNotEmpty, ValidateIf } from 'class-validator';
+import {
+  IsBoolean,
+  IsEnum,
+  IsNotEmpty,
+  Validate,
+  ValidateBy,
+  ValidateIf,
+} from 'class-validator';
 import { Portion } from '../enum/portion.enum';
-import { SutureVariation } from '../enum/sutureVariation.enum';
+import {
+  InsideOutSutureVariation,
+  OutsideInSutureVariation,
+  SutureVariation,
+} from '../enum/sutureVariation.enum';
 import { Zone } from '../enum/zone.enum';
-import { ProcedureType } from '../enum/procedureType.enum';
 import { RelativePosition } from '../enum/relativePosition.enum';
+import { Extension } from '../enum/extension.enum';
+import { IsValidSutureVariation } from 'src/utils/validators/suture-variation.validator';
 
 export class CreateSuturaMeniscalProcedureDto {
   constructor(data) {
@@ -23,8 +35,8 @@ export class CreateSuturaMeniscalProcedureDto {
   injuryRegion: Zone;
 
   @IsNotEmpty()
-  @IsEnum(ProcedureType)
-  injuryExtension: ProcedureType;
+  @IsEnum(Extension)
+  injuryExtension: Extension;
 
   @ValidateIf(
     (object, value) =>
@@ -46,6 +58,6 @@ export class CreateSuturaMeniscalProcedureDto {
   sutureTechnique: string;
 
   @IsNotEmpty()
-  @IsEnum(SutureVariation)
+  @Validate(IsValidSutureVariation)
   sutureVariation: SutureVariation;
 }

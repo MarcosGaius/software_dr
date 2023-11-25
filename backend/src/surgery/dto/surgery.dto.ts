@@ -50,7 +50,6 @@ export class CreateSurgeryDto {
 
   @IsOptional()
   @IsArray()
-  @Validate(IsEnumArray, Object.values(Limitation))
   @Transform(({ value }) => {
     if (!value) return value;
     return value.map(upperCaseFirstTransformer);
