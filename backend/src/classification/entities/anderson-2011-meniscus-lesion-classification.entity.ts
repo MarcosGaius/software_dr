@@ -32,7 +32,7 @@ export class Anderson2011MeniscusLesionClassification extends EntityHelper {
   @Column()
   lesionLength: number;
 
-  @Column()
+  @Column({ type: 'float' })
   excisedQuantity: number;
 
   @OneToOne(

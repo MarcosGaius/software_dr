@@ -17,6 +17,7 @@ import { LaPrade2015MedialLateralMeniscusRootRupture } from './laprade-2015-medi
 import { Nguyen2014MorphologyMeniscusLesion } from './nguyen-2014-morphology-meniscus-lesion.entity';
 import { RampMeniscusLesionClassification } from './ramp-meniscus-lesion-classification.entity';
 import { ThaunatGreifClassification } from './thaunat-greif-classification.entity';
+import { Classification as ClassificationEnum } from '../enums/classificationType.enum';
 
 @Entity()
 export class Classification extends EntityHelper {
@@ -36,6 +37,8 @@ export class Classification extends EntityHelper {
   patient: Patient;
 
   // Specific classifications below:
+  @Column({ enum: ClassificationEnum })
+  procedure: ClassificationEnum;
 
   @OneToOne(() => Anderson2011MeniscusLesionClassification)
   @JoinColumn()

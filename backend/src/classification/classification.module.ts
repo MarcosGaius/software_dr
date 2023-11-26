@@ -9,6 +9,8 @@ import {
   RampMeniscusLesionClassification,
   ThaunatGreifClassification,
 } from './entities';
+import { Anderson2011MeniscusLesionClassification } from './entities/anderson-2011-meniscus-lesion-classification.entity';
+import { PatientModule } from 'src/patient/patient.module';
 
 @Module({
   imports: [
@@ -18,7 +20,9 @@ import {
       Nguyen2014MorphologyMeniscusLesion,
       RampMeniscusLesionClassification,
       ThaunatGreifClassification,
+      Anderson2011MeniscusLesionClassification,
     ]),
+    PatientModule,
   ],
   controllers: [ClassificationController],
   providers: [ClassificationService],

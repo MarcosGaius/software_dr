@@ -12,3 +12,13 @@ export enum LesionVariation {
   CompletePeripheralPosteriorHorn = '(A) Lesão completa periférica no corno posterior (Não Capsular)',
   CompleteMeniscocapsular = '(B) Lesão completa meniscocapsular',
 }
+
+export enum Type3LesionVariation {
+  PeripheralInferiorPartial = '(A) Lesão parcial inferior periférica',
+  MeniscotibialLigament = '(B) Lesão ligamento meniscotibial',
+}
+
+export enum Type4LesionVariation {
+  CompletePeripheralPosteriorHorn = '(A) Lesão completa periférica no corno posterior (Não Capsular)',
+  CompleteMeniscocapsular = '(B) Lesão completa meniscocapsular',
+}

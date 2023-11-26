@@ -63,6 +63,8 @@ export class ProcedureTypeValidation implements ValidatorConstraintInterface {
   }
 
   defaultMessage(args: ValidationArguments) {
-    return this.recursiveErrorMessages(this.errors);
+    const errors = this.recursiveErrorMessages(this.errors || []);
+    this.errors = '';
+    return errors;
   }
 }

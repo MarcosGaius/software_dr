@@ -4,28 +4,61 @@ import {
   ValidatorConstraintInterface,
   validateOrReject,
 } from 'class-validator';
-import { CreateMeniscectomiaProcedureDto } from 'src/procedure/dto/meniscectomia-procedure.dto';
-import { CreateSuturaMeniscalProcedureDto } from 'src/procedure/dto/sutura-meniscal-procedure.dto';
 import { ValidationError } from '@nestjs/common';
 import { Classification } from 'src/classification/enums/classificationType.enum';
+import { Nguyen2014MorphologyMeniscusLesionClassificationDto } from 'src/classification/dto/nguyen-2014-morphology-meniscus-lesion.dto';
+import { RampMeniscusLesionClassificationDto } from 'src/classification/dto/ramp-meniscus-lesion-classification.dto';
+import { ThaunatGreifClassificationDto } from 'src/classification/dto/thaunat-greif-classification.dto';
+import { Anderson2011MeniscusLesionClassificationDto } from 'src/classification/dto/anderson-2011-meniscus-lesion-classification.dto';
+import { LaPrade2015MedialLateralMeniscusRootRuptureClassifitcationDto } from 'src/classification/dto/laprade-2015-medial-lateral-meniscus-root-rupture.dto';
+
+// Ver um jeito de evitar o switch case
+// No futuro, com mais classificações, isso pode ficar horrível para manuntenção
 
 @ValidatorConstraint({ name: 'ClassificationValidation', async: true })
 export class ClassificationValidation implements ValidatorConstraintInterface {
   private errors;
   async validate(value: object, args: ValidationArguments) {
-    switch (args.object['procedureType']) {
+    switch (args.object['classificationType']) {
       case Classification.Nguyen2014MorphologyMeniscusLesion:
         return await validateOrReject(
-          new CreateMeniscectomiaProcedureDto(value)
+          new Nguyen2014MorphologyMeniscusLesionClassificationDto(value)
         )
           .then(() => true)
           .catch((e) => {
             this.errors = e;
             return false;
           });
-      case Procedure.SuturaMeniscal:
+      case Classification.RampMeniscusLesion:
         return await validateOrReject(
-          new CreateSuturaMeniscalProcedureDto(value)
+          new RampMeniscusLesionClassificationDto(value)
+        )
+          .then(() => true)
+          .catch((e) => {
+            this.errors = e;
+            return false;
+          });
+      case Classification.ThaunatGreif:
+        return await validateOrReject(new ThaunatGreifClassificationDto(value))
+          .then(() => true)
+          .catch((e) => {
+            this.errors = e;
+            return false;
+          });
+      case Classification.Anderson2011MeniscusLesion:
+        return await validateOrReject(
+          new Anderson2011MeniscusLesionClassificationDto(value)
+        )
+          .then(() => true)
+          .catch((e) => {
+            this.errors = e;
+            return false;
+          });
+      case Classification.Laprade2015MedialLateralMeniscusRootRupture:
+        return await validateOrReject(
+          new LaPrade2015MedialLateralMeniscusRootRuptureClassifitcationDto(
+            value
+          )
         )
           .then(() => true)
           .catch((e) => {
@@ -63,6 +96,8 @@ export class ClassificationValidation implements ValidatorConstraintInterface {
   }
 
   defaultMessage(args: ValidationArguments) {
-    return this.recursiveErrorMessages(this.errors);
+    const errors = this.recursiveErrorMessages(this.errors || []);
+    this.errors = '';
+    return errors;
   }
 }
