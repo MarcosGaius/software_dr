@@ -1,35 +1,66 @@
 import { AuthProvider, HttpError } from "react-admin";
-import data from "./users.json";
+import { doFetch, handleError } from "./utils/network";
 
-/**
- * This authProvider is only for test purposes. Don't use it in production.
- */
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const authProvider: AuthProvider = {
-  login: ({ username, password }) => {
-    const user = data.users.find(
-      (u) => u.username === username && u.password === password
-    );
+  login: async ({ username, password }) => {
+    const request = new Request(`${apiUrl}/auth/login`, {
+      method: "POST",
+      body: JSON.stringify({ email: username, password }),
+      headers: new Headers({ "Content-Type": "application/json" }),
+    });
 
-    if (user) {
-      // eslint-disable-next-line no-unused-vars
-      let { password, ...userToPersist } = user;
-      localStorage.setItem("user", JSON.stringify(userToPersist));
+    try {
+      const { data } = await doFetch(request);
+
+      if (data.errors) {
+        throw new HttpError("Senha ou email inválidos!", 401, {
+          message: "Invalid username or password",
+        });
+      }
+
+      localStorage.setItem(
+        "auth",
+        JSON.stringify({
+          refreshToken: data.refreshToken,
+          token: data.token,
+          tokenExpires: data.tokenExpires,
+        })
+      );
+
       return Promise.resolve();
+    } catch (e) {
+      handleError(e);
     }
-
-    return Promise.reject(
-      new HttpError("Unauthorized", 401, {
-        message: "Invalid username or password",
-      })
-    );
   },
   logout: () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("auth");
     return Promise.resolve();
   },
-  checkError: () => Promise.resolve(),
-  checkAuth: () =>
-    localStorage.getItem("user") ? Promise.resolve() : Promise.reject(),
+  checkError: (error) => {
+    const status = error.status;
+    if (status === 401 || status === 403) {
+      localStorage.removeItem("auth");
+      return Promise.reject();
+    }
+    return Promise.resolve();
+  },
+  checkAuth: () => {
+    const auth = localStorage.getItem("auth");
+
+    if (!auth) return Promise.reject({ message: "Não autorizado!" });
+
+    const { expiresIn } = JSON.parse(auth);
+
+    if (Date.now() > expiresIn) {
+      return Promise.reject({
+        message: "Sessão expirada. Entre com sua conta novamente!",
+      });
+    }
+
+    return Promise.resolve();
+  },
   getPermissions: () => {
     return Promise.resolve(undefined);
   },

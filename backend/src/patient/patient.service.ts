@@ -16,8 +16,8 @@ export class PatientService {
 
   findManyWithPagination(
     paginationOptions: IPaginationOptions
-  ): Promise<Patient[]> {
-    return this.patientRepository.find({
+  ): Promise<[Patient[], number]> {
+    return this.patientRepository.findAndCount({
       skip: (paginationOptions.page - 1) * paginationOptions.limit,
       take: paginationOptions.limit,
     });

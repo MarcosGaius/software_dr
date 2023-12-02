@@ -10,7 +10,9 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   UseGuards,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { ClassificationService } from './classification.service';
 import { CreateClassicationDto } from './dto/classication.dto';
@@ -20,7 +22,7 @@ import { infinityPagination } from 'src/utils/infinity-pagination';
 import { NullableType } from 'src/utils/types/nullable.type';
 
 @Controller({ path: 'classification', version: '1' })
-// @UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 export class ClassificationController {
   constructor(private readonly classificationService: ClassificationService) {}
 
@@ -33,19 +35,25 @@ export class ClassificationController {
   @HttpCode(HttpStatus.OK)
   async findAll(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Res({ passthrough: true }) res: Response
   ): Promise<InfinityPaginationResultType<Classification>> {
     if (limit > 50) {
       limit = 50;
     }
 
-    return infinityPagination(
+    const [classification, count] =
       await this.classificationService.findManyWithPagination({
         page,
         limit,
-      }),
-      { page, limit }
-    );
+      });
+
+    return infinityPagination(classification, res, {
+      resource: 'classification',
+      page,
+      limit,
+      count,
+    });
   }
 
   @Get(':id')

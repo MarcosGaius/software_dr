@@ -64,8 +64,8 @@ export class SurgeryService {
 
   findManyWithPagination(
     paginationOptions: IPaginationOptions
-  ): Promise<Surgery[]> {
-    return this.surgeryRepository.find({
+  ): Promise<[Surgery[], number]> {
+    return this.surgeryRepository.findAndCount({
       skip: (paginationOptions.page - 1) * paginationOptions.limit,
       take: paginationOptions.limit,
     });

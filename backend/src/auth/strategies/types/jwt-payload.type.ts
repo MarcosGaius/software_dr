@@ -1,6 +1,5 @@
-import { User } from 'src/user/entity/user.entity';
-
-export type JwtPayloadType = Pick<User, 'id'> & {
+export type JwtPayloadType = {
   iat: number;
   exp: number;
+  sub: string;
 };

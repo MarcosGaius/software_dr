@@ -15,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   }
 
   public validate(payload: JwtPayloadType): OrNeverType<JwtPayloadType> {
-    if (!payload.id) {
+    if (!payload.sub || Date.now() > payload.exp * 1000) {
       throw new UnauthorizedException();
     }
 

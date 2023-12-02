@@ -11,7 +11,9 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   UseGuards,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { CreatePatientDto, UpdatePatientDto } from './dto/patient.dto';
 import { PatientService } from './patient.service';
 import { Patient } from './entities/patient.entity';
@@ -32,19 +34,24 @@ export class PatientController {
   @HttpCode(HttpStatus.OK)
   async findAll(
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Res({ passthrough: true }) res: Response
   ): Promise<InfinityPaginationResultType<Patient>> {
     if (limit > 50) {
       limit = 50;
     }
 
-    return infinityPagination(
-      await this.patientService.findManyWithPagination({
-        page,
-        limit,
-      }),
-      { page, limit }
-    );
+    const [patient, count] = await this.patientService.findManyWithPagination({
+      page,
+      limit,
+    });
+
+    return infinityPagination(patient, res, {
+      resource: 'patient',
+      page,
+      limit,
+      count,
+    });
   }
 
   @Get(':id')

@@ -91,8 +91,8 @@ export class ClassificationService {
 
   findManyWithPagination(
     paginationOptions: IPaginationOptions
-  ): Promise<Classification[]> {
-    return this.classificationRepository.find({
+  ): Promise<[Classification[], number]> {
+    return this.classificationRepository.findAndCount({
       skip: (paginationOptions.page - 1) * paginationOptions.limit,
       take: paginationOptions.limit,
     });

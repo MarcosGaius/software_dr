@@ -10,7 +10,9 @@ import {
   DefaultValuePipe,
   ParseIntPipe,
   UseGuards,
+  Res,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { CreateSurgeryDto } from './dto/surgery.dto';
 import { SurgeryService } from './surgery.service';
 import { InfinityPaginationResultType } from 'src/utils/types/infinity-pagination-result.type';
@@ -32,20 +34,23 @@ export class SurgeryController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async findAll(
+    @Res({ passthrough: true }) res: Response,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
     @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number
   ): Promise<InfinityPaginationResultType<Surgery>> {
-    if (limit > 50) {
-      limit = 50;
-    }
+    if (limit > 50) limit = 50;
 
-    return infinityPagination(
-      await this.surgeryService.findManyWithPagination({
-        page,
-        limit,
-      }),
-      { page, limit }
-    );
+    const [surgery, count] = await this.surgeryService.findManyWithPagination({
+      page,
+      limit,
+    });
+
+    return infinityPagination(surgery, res, {
+      resource: 'surgery',
+      page,
+      limit,
+      count,
+    });
   }
 
   @Get(':id')
