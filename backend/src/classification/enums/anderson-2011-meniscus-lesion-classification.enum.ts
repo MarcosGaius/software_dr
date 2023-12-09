@@ -1,3 +1,14 @@
+export enum Criteria {
+  RegardingInjury = 'Quanto a lesão',
+  RegardingExtension = 'Quanto a extensão da lesão',
+  RegardingLocation = 'Quanto a localização',
+  CenterToPoplitealHiatus = 'Central ao Hiato popliteo',
+  RegardingPattern = 'Padrão de lesão',
+  RegardingTissue = 'Qualidade do tecido',
+  RegardingLength = 'Comprimento de lesão',
+  RegardingExcised = 'Quantidade de menisco excisado',
+}
+
 export enum LesionType {
   Partial = 'Parcial',
   Complete = 'Completa',

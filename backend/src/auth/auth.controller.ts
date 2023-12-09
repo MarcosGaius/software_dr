@@ -14,6 +14,7 @@ import { RefreshDto } from './dto/refresh.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 // adicionar cookies
+// tratar os refresh tokens antigos, eles continuam validos... adicionar algo de session
 
 @Controller({
   path: 'auth',
@@ -36,7 +37,7 @@ export class AuthController {
 
   @Post('refresh')
   @HttpCode(HttpStatus.OK)
-  @UseGuards(AuthGuard('jwt-refresh'))
+  // @UseGuards(AuthGuard('jwt-refresh'))
   public async refresh(@Body() refreshDto: RefreshDto) {
     return this.authService.refresh(refreshDto.refreshToken);
   }

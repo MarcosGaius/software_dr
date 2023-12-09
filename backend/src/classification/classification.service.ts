@@ -95,6 +95,9 @@ export class ClassificationService {
     return this.classificationRepository.findAndCount({
       skip: (paginationOptions.page - 1) * paginationOptions.limit,
       take: paginationOptions.limit,
+      relations: {
+        patient: true,
+      },
     });
   }
 

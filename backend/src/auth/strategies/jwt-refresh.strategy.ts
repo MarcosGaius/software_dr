@@ -22,6 +22,7 @@ export class JwtRefreshStrategy extends PassportStrategy(
   public validate(
     payload: JwtRefreshPayloadType
   ): OrNeverType<JwtRefreshPayloadType> {
+    console.log('payload:', payload);
     return payload;
   }
 }

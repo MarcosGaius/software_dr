@@ -2,7 +2,10 @@ import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Classification } from './classification.entity';
-import { LesionType } from '../enums/anderson-2011-meniscus-lesion-classification.enum';
+import {
+  Criteria,
+  LesionType,
+} from '../enums/anderson-2011-meniscus-lesion-classification.enum';
 
 // Classificação das Lesões Meniscais (Anderson et al, 2011)
 
@@ -12,27 +15,30 @@ export class Anderson2011MeniscusLesionClassification extends EntityHelper {
   id: number;
 
   @Column()
+  criteria: Criteria;
+
+  @Column({ nullable: true })
   lesionType: LesionType;
 
-  @Column()
+  @Column({ nullable: true })
   lesionExtension: string;
 
-  @Column()
+  @Column({ nullable: true })
   lesionLocation: string;
 
-  @Column()
+  @Column({ nullable: true })
   centerToPoplitealHiatus: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   lesionPattern: string;
 
-  @Column()
+  @Column({ nullable: true })
   tissueQuality: string;
 
-  @Column()
+  @Column({ nullable: true })
   lesionLength: number;
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', nullable: true })
   excisedQuantity: number;
 
   @OneToOne(

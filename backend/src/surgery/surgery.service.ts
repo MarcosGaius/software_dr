@@ -44,6 +44,7 @@ export class SurgeryService {
     });
 
     const procedureType = body.procedureType;
+    console.log('procedureType:', procedureType);
 
     switch (procedureType) {
       case 'meniscectomia':
@@ -51,12 +52,15 @@ export class SurgeryService {
           await this.procedureService.createMeniscectomia(
             body.procedure as CreateMeniscectomiaProcedureDto
           );
+        break;
       case 'sutura-meniscal':
         surgery.suturaMeniscalProcedure =
           await this.procedureService.createSuturaMeniscal(
             body.procedure as CreateSuturaMeniscalProcedureDto
           );
+        break;
       default:
+        break;
     }
 
     return this.surgeryRepository.save(surgery);

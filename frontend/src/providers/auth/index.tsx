@@ -1,5 +1,5 @@
 import { AuthProvider, HttpError } from "react-admin";
-import { doFetch, handleError } from "./utils/network";
+import { doFetch, handleError } from "../../utils/network";
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -38,15 +38,33 @@ export const authProvider: AuthProvider = {
     localStorage.removeItem("auth");
     return Promise.resolve();
   },
-  checkError: (error) => {
+  checkError: async (error) => {
     const status = error.status;
-    if (status === 401 || status === 403) {
-      localStorage.removeItem("auth");
-      return Promise.reject();
+    const auth = localStorage.getItem("auth");
+    if (status === 401) {
+      try {
+        if (!auth) throw new Error();
+        const { refreshToken } = JSON.parse(auth);
+
+        const request = new Request(`${apiUrl}/auth/refresh`, {
+          method: "POST",
+          body: JSON.stringify({ refreshToken }),
+          headers: new Headers({ "Content-Type": "application/json" }),
+        });
+
+        const { data } = await doFetch(request);
+
+        if (!data.token) throw new Error();
+
+        localStorage.setItem("auth", JSON.stringify(data));
+      } catch (error) {
+        localStorage.removeItem("auth");
+        return Promise.reject();
+      }
     }
     return Promise.resolve();
   },
-  checkAuth: () => {
+  checkAuth: async () => {
     const auth = localStorage.getItem("auth");
 
     if (!auth) return Promise.reject({ message: "Não autorizado!" });

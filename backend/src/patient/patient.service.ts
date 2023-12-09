@@ -26,6 +26,16 @@ export class PatientService {
   findOne(fields: EntityCondition<Patient>): Promise<NullableType<Patient>> {
     return this.patientRepository.findOne({
       where: fields,
+      relations: {
+        surgeries: true,
+        classifications: {
+          anderson2011MeniscusLesion: true,
+          laprade2015MedialLateralMeniscusRootRupture: true,
+          nguyen2014MorphologyMeniscusLesion: true,
+          rampMeniscusLesion: true,
+          thaunatGreif: true,
+        },
+      },
     });
   }
 

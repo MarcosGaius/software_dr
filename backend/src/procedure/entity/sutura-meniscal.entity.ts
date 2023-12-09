@@ -36,6 +36,6 @@ export class SuturaMeniscal extends EntityHelper {
   @Column()
   sutureVariation: SutureVariation;
 
-  @OneToOne(() => Surgery)
+  @OneToOne(() => Surgery, { nullable: true })
   surgery: Surgery;
 }
