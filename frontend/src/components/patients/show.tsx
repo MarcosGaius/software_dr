@@ -16,7 +16,7 @@ import {
   memberPositionChoices,
   structureChoices,
 } from "../../utils/choices";
-import { procedureChoices } from "../surgery/create";
+import { procedureChoices } from "../../utils/choices";
 
 export const ShowPatient = () => {
   return (
