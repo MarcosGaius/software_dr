@@ -1,0 +1,6 @@
+[phases.migrate]
+cmds= ["npm run migration:prod:run"]
+dependsOn = ["install"]
+
+[phases.build]
+dependsOn = ["...", "migrate"]
