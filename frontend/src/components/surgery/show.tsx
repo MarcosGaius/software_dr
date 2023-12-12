@@ -1,5 +1,6 @@
 import {
   DateField,
+  FunctionField,
   SelectField,
   Show,
   SimpleShowLayout,
@@ -105,6 +106,12 @@ export const ShowSurgery = () => {
         <TextField source="complaints" label="Queixas" />
         <TextField source="icd" label="CID" />
         <DateField source="createdAt" label="Data de criação" />
+        <FunctionField
+          label="Paciente"
+          render={(rec: any) =>
+            `${rec.patient.firstName} ${rec.patient.lastName} - ${rec.patient.cpf}`
+          }
+        />
         <hr />
         <ProcedureFields procedure={record.procedure} />
       </SimpleShowLayout>

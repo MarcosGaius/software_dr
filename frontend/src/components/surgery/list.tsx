@@ -1,4 +1,11 @@
-import { List, Datagrid, TextField, DateField, SelectField } from "react-admin";
+import {
+  List,
+  Datagrid,
+  TextField,
+  DateField,
+  SelectField,
+  FunctionField,
+} from "react-admin";
 import {
   contralateralChoices,
   injuryMechanismChoices,
@@ -42,6 +49,12 @@ export const SurgeryList = () => (
         choices={procedureChoices}
       />
       <DateField source="createdAt" label="Data de criação" />
+      <FunctionField
+        label="Paciente"
+        render={(rec: any) =>
+          `${rec.patient.firstName} ${rec.patient.lastName} - ${rec.patient.cpf}`
+        }
+      />
     </Datagrid>
   </List>
 );

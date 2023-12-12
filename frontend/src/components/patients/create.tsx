@@ -12,12 +12,12 @@ export const CreatePatient = () => {
   const notify = useNotify();
 
   const onSuccess = () => {
-    notify("Classificação criada com sucesso!", { type: "success" });
+    notify("Paciente cadastrado com sucesso!", { type: "success" });
   };
 
   const onError = () => {
     notify(
-      "Erro ao criar a classificação, tente novamente. Se o problema persistir entre em contato com o suporte.",
+      "Erro ao cadastrar o paciente, tente novamente. Se o problema persistir entre em contato com o suporte.",
       { type: "error" }
     );
   };

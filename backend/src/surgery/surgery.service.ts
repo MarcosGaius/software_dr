@@ -72,6 +72,16 @@ export class SurgeryService {
     return this.surgeryRepository.findAndCount({
       skip: (paginationOptions.page - 1) * paginationOptions.limit,
       take: paginationOptions.limit,
+      relations: {
+        patient: true,
+      },
+      select: {
+        patient: {
+          firstName: true,
+          lastName: true,
+          cpf: true,
+        },
+      },
     });
   }
 
@@ -82,6 +92,13 @@ export class SurgeryService {
         patient: true,
         meniscectomiaProcedure: true,
         suturaMeniscalProcedure: true,
+      },
+      select: {
+        patient: {
+          firstName: true,
+          lastName: true,
+          cpf: true,
+        },
       },
     });
   }

@@ -16,7 +16,7 @@ import { MeniscectomiaForm } from "./procedures/meniscectomia";
 import { procedureChoices } from "../../utils/choices";
 
 const procedureMap = {
-  "Sutura meniscal": <SuturaMeniscalForm />,
+  "Sutura Meniscal": <SuturaMeniscalForm />,
   Meniscectomia: <MeniscectomiaForm />,
 };
 
