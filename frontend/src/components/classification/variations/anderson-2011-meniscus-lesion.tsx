@@ -136,22 +136,87 @@ const FieldByCriteria = ({ criteria }: { criteria: string }) => {
 };
 
 export const Anderson2011MeniscusLesion = () => {
-  const [selectedCriteria, setSelectedCriteria] = useState<string>("");
-
   return (
     <>
-      <Grid item xs={12}>
-        <SelectInput
+      {/* <SelectInput
           fullWidth
           source="criteria"
           label="Critério"
           choices={criteriaChoices}
-          onChange={(e) => setSelectedCriteria(e.target.value)}
           required
         />
         <Grid item xs={12} container alignItems="center">
           <FieldByCriteria criteria={selectedCriteria} />
-        </Grid>
+        </Grid> */}
+      <Grid item xs={6}>
+        <SelectInput
+          fullWidth
+          source="lesionType"
+          label="Tipo de lesão"
+          choices={lesionTypeChoices}
+          required
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <SelectInput
+          fullWidth
+          source="lesionExtension"
+          label="Extensão da lesão"
+          choices={lesionExtensionChoices}
+          required
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <SelectInput
+          fullWidth
+          source="lesionLocation"
+          label="Localização da lesão"
+          choices={lesionLocationChoices}
+          required
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <BooleanInput
+          source="centralToHiatoPopliteo"
+          label="Central ao Hiato popliteo?"
+          fullWidth
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <SelectInput
+          fullWidth
+          source="lesionPattern"
+          label="Padrão da lesão"
+          choices={lesionPatternChoices}
+          required
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <SelectInput
+          fullWidth
+          source="tissueQuality"
+          label="Qualidade do tecido"
+          choices={tissueQualityChoices}
+          required
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <NumberInput
+          fullWidth
+          source="lesionLength"
+          label="Comprimento de lesão (em mm)"
+          required
+        />
+      </Grid>
+      <Grid item xs={6}>
+        <NumberInput
+          fullWidth
+          source="excisedQuantity"
+          label="Quantidade excisada (em decimal, e.g. 0.1 para 10%)"
+          max={1}
+          min={0}
+          required
+        />
       </Grid>
     </>
   );

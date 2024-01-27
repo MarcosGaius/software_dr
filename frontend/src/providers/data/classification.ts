@@ -18,7 +18,14 @@ export const handleClassificationCreate = (
       classification.lesionType = data.lesionType;
       break;
     case "nguyen-2014-morphology-meniscus-lesion":
-      classification.morphology = data.morphology;
+      classification.horizontal = data.horizontal;
+      classification.longitudinal = data.longitudinal;
+      classification.radial = data.radial;
+      classification.root = data.root;
+      classification.displaced = data.displaced;
+      classification.complex = data.complex;
+      classification.bucketHandle = data.bucketHandle;
+      classification.fraying = data.fraying;
       classification.parameniscalCyst = data.parameniscalCyst;
       classification.relativePortion = data.relativePortion;
       break;
@@ -27,11 +34,10 @@ export const handleClassificationCreate = (
       classification.lesionVariation = data.lesionVariation;
       break;
     case "anderson-2011-meniscus-lesion":
-      classification.criteria = data.criteria;
       classification.lesionType = data.lesionType;
       classification.lesionExtension = data.lesionExtension;
       classification.lesionLocation = data.lesionLocation;
-      classification.centerToPoplitealHiatus = data.centerToPoplitealHiatus;
+      classification.centerToPoplitealHiatus = !!data.centerToPoplitealHiatus;
       classification.lesionPattern = data.lesionPattern;
       classification.tissueQuality = data.tissueQuality;
       classification.lesionLength = data.lesionLength;

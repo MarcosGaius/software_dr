@@ -16,6 +16,7 @@ export const handleSurgeryCreate = (
     posterolateralAccess,
     sutureTechnique,
     sutureVariation,
+    deviceQuantity,
     ...data
   } = params.data;
 
@@ -38,6 +39,7 @@ export const handleSurgeryCreate = (
       procedure.posterolateralAccess = posterolateralAccess;
       procedure.sutureTechnique = sutureTechnique;
       procedure.sutureVariation = sutureVariation;
+      procedure.deviceQuantity = deviceQuantity;
       break;
     default:
       break;

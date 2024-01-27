@@ -2,6 +2,7 @@ import {
   IsBoolean,
   IsEnum,
   IsNotEmpty,
+  IsOptional,
   Validate,
   ValidateBy,
   ValidateIf,
@@ -41,7 +42,7 @@ export class CreateSuturaMeniscalProcedureDto {
   @ValidateIf(
     (object, value) =>
       object.relativePosition === RelativePosition.Medial &&
-      object.portion === Portion.AnteriorHorn
+      object.portion === Portion.PosteriorHorn
   )
   @IsBoolean()
   posteromedialAccess: boolean | null;
@@ -49,15 +50,21 @@ export class CreateSuturaMeniscalProcedureDto {
   @ValidateIf(
     (object, value) =>
       object.relativePosition === RelativePosition.Lateral &&
-      object.portion === Portion.AnteriorHorn
+      object.portion === Portion.PosteriorHorn
   )
   @IsBoolean()
   posterolateralAccess: boolean | null;
 
-  @IsNotEmpty()
+  @IsOptional()
   sutureTechnique: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @Validate(IsValidSutureVariation)
   sutureVariation: SutureVariation;
+
+  @ValidateIf(
+    (object, _) => !!object.sutureTechnique && !!object.sutureVariation
+  )
+  @IsNotEmpty()
+  deviceQuantity: number; // quantidade de suturas
 }

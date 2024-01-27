@@ -9,11 +9,10 @@ import {
 import {
   IsBoolean,
   IsEnum,
-  IsNotEmpty,
   IsNumber,
+  IsOptional,
   Max,
   Min,
-  ValidateIf,
 } from 'class-validator';
 
 // Classificação das Lesões Meniscais (Anderson et al, 2011)
@@ -23,47 +22,55 @@ export class Anderson2011MeniscusLesionClassificationDto {
     Object.assign(this, data);
   }
 
-  @IsNotEmpty()
-  @IsEnum(Criteria)
-  criteria: string;
+  // @IsNotEmpty()
+  // @IsEnum(Criteria)
+  // criteria: string;
 
-  @ValidateIf((obj) => obj.criteria === Criteria.RegardingInjury)
-  @IsNotEmpty()
+  // @ValidateIf((obj) => obj.criteria === Criteria.RegardingInjury)
+  // @IsNotEmpty()
+  @IsOptional()
   @IsEnum(LesionType)
   lesionType: LesionType;
 
-  @ValidateIf((obj) => obj.criteria === Criteria.RegardingExtension)
+  // @ValidateIf((obj) => obj.criteria === Criteria.RegardingExtension)
+  @IsOptional()
   @IsEnum(LesionExtension)
-  @IsNotEmpty()
+  // @IsNotEmpty()
   lesionExtension: LesionExtension;
 
-  @ValidateIf((obj) => obj.criteria === Criteria.RegardingLocation)
+  // @ValidateIf((obj) => obj.criteria === Criteria.RegardingLocation)
+  @IsOptional()
   @IsEnum(LesionLocation)
-  @IsNotEmpty()
+  // @IsNotEmpty()
   lesionLocation: LesionLocation;
 
-  @ValidateIf((obj) => obj.criteria === Criteria.CenterToPoplitealHiatus)
-  @IsNotEmpty()
+  @IsOptional()
+  // @ValidateIf((obj) => obj.criteria === Criteria.CenterToPoplitealHiatus)
+  // @IsNotEmpty()
   @IsBoolean()
   centerToPoplitealHiatus: boolean;
 
-  @ValidateIf((obj) => obj.criteria === Criteria.RegardingPattern)
+  // @ValidateIf((obj) => obj.criteria === Criteria.RegardingPattern)
+  @IsOptional()
   @IsEnum(LesionPattern)
-  @IsNotEmpty()
+  // @IsNotEmpty()
   lesionPattern: LesionPattern;
 
-  @ValidateIf((obj) => obj.criteria === Criteria.RegardingTissue)
+  // @ValidateIf((obj) => obj.criteria === Criteria.RegardingTissue)
+  @IsOptional()
   @IsEnum(TissueQuality)
-  @IsNotEmpty()
+  // @IsNotEmpty()
   tissueQuality: TissueQuality;
 
-  @ValidateIf((obj) => obj.criteria === Criteria.RegardingLength)
-  @IsNotEmpty()
+  // @ValidateIf((obj) => obj.criteria === Criteria.RegardingLength)
+  // @IsNotEmpty()
+  @IsOptional()
   @IsNumber()
   lesionLength: number; // Em mm
 
-  @ValidateIf((obj) => obj.criteria === Criteria.RegardingExcised)
-  @IsNotEmpty()
+  // @ValidateIf((obj) => obj.criteria === Criteria.RegardingExcised)
+  // @IsNotEmpty()
+  @IsOptional()
   @IsNumber({ maxDecimalPlaces: 2 })
   @Min(0)
   @Max(1)

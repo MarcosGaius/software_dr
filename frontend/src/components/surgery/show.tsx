@@ -41,6 +41,10 @@ const ProcedureFields = ({ procedure }: { procedure: string }) => {
             label="Extensão da Lesão"
             source="suturaMeniscalProcedure.injuryExtension"
           />
+          <TextField
+            label="Quantidade de dispositivos"
+            source="suturaMeniscalProcedure.deviceQuantity"
+          />
         </SimpleShowLayout>
       );
     case "meniscectomia":

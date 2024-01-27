@@ -2,10 +2,7 @@ import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 import { EntityHelper } from 'src/utils/entity-helper';
 import { Classification } from './classification.entity';
-import {
-  Criteria,
-  LesionType,
-} from '../enums/anderson-2011-meniscus-lesion-classification.enum';
+import { LesionType } from '../enums/anderson-2011-meniscus-lesion-classification.enum';
 
 // Classificação das Lesões Meniscais (Anderson et al, 2011)
 
@@ -13,9 +10,6 @@ import {
 export class Anderson2011MeniscusLesionClassification extends EntityHelper {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column()
-  criteria: Criteria;
 
   @Column({ nullable: true })
   lesionType: LesionType;

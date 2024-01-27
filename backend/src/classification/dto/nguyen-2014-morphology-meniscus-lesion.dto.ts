@@ -11,11 +11,39 @@ export class Nguyen2014MorphologyMeniscusLesionClassificationDto {
     Object.assign(this, data);
   }
 
-  @IsEnum(LesionMorphology)
+  @IsBoolean()
   @IsNotEmpty()
-  morphology: LesionMorphology;
+  horizontal: boolean;
 
-  @ValidateIf((obj) => obj.morphology === LesionMorphology.Horizontal)
+  @IsBoolean()
+  @IsNotEmpty()
+  longitudinal: boolean;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  radial: boolean;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  root: boolean;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  displaced: boolean;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  complex: boolean;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  bucketHandle: boolean;
+
+  @IsBoolean()
+  @IsNotEmpty()
+  fraying: boolean;
+
+  @ValidateIf((obj) => obj.horizonal)
   @IsBoolean()
   @IsNotEmpty()
   parameniscalCyst: boolean;

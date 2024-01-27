@@ -21,6 +21,7 @@ import { InfinityPaginationResultType } from 'src/utils/types/infinity-paginatio
 import { infinityPagination } from 'src/utils/infinity-pagination';
 import { NullableType } from 'src/utils/types/nullable.type';
 import { AuthGuard } from '@nestjs/passport';
+import { ParseJsonPipe } from 'src/utils/pipes/ParseJsonPipe';
 
 @Controller({
   path: 'patient',
@@ -33,13 +34,13 @@ export class PatientController {
   @Get()
   @HttpCode(HttpStatus.OK)
   async findAll(
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
+    @Query('range', new DefaultValuePipe([0, 10]), ParseJsonPipe)
+    range: [number, number],
     @Res({ passthrough: true }) res: Response
   ): Promise<InfinityPaginationResultType<Patient>> {
-    if (limit > 50) {
-      limit = 50;
-    }
+    let limit = range[1] + 1 - range[0];
+    if (limit > 50) limit = 50;
+    const page = range[0] / limit + 1;
 
     const [patient, count] = await this.patientService.findManyWithPagination({
       page,

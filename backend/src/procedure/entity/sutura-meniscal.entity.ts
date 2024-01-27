@@ -30,11 +30,14 @@ export class SuturaMeniscal extends EntityHelper {
   @Column({ nullable: true })
   posterolateralAccess: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   sutureTechnique: string;
 
-  @Column()
+  @Column({ nullable: true })
   sutureVariation: SutureVariation;
+
+  @Column({ nullable: true })
+  deviceQuantity: number;
 
   @OneToOne(() => Surgery, { nullable: true })
   surgery: Surgery;

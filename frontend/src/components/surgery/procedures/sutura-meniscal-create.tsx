@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { BooleanInput, SelectInput } from "react-admin";
+import { BooleanInput, NumberInput, SelectInput, minValue } from "react-admin";
 import { AutoCompleteFreeSolo } from "../../base/autoCompleteFreeSolo";
 import { useState } from "react";
 
@@ -74,6 +74,7 @@ export const SuturaMeniscalForm = () => {
             { id: "inside-out", name: "Inside-out" },
           ]}
           onChange={(e, value) => setSutureTechnique(value)}
+          required
         />
       </Grid>
       {sutureTechnique === "outside-in" ||
@@ -101,7 +102,19 @@ export const SuturaMeniscalForm = () => {
               { id: "precision", name: "Precision" },
               { id: "fast-fix", name: "Fast-fix" },
             ]}
-            required={true}
+            required
+          />
+        </Grid>
+      )}
+      {["outside-in", "inside-out", "all-inside"].includes(sutureTechnique) && (
+        <Grid item xs={4}>
+          <NumberInput
+            source="deviceQuantity"
+            name="deviceQuantity"
+            label="Quantidade de dispositivos"
+            required
+            validate={[minValue(0)]}
+            fullWidth
           />
         </Grid>
       )}

@@ -20,6 +20,7 @@ import { Surgery } from './entities/surgery.entity';
 import { infinityPagination } from 'src/utils/infinity-pagination';
 import { NullableType } from 'src/utils/types/nullable.type';
 import { AuthGuard } from '@nestjs/passport';
+import { ParseJsonPipe } from 'src/utils/pipes/ParseJsonPipe';
 
 @Controller({ path: 'surgery', version: '1' })
 @UseGuards(AuthGuard('jwt'))
@@ -35,10 +36,12 @@ export class SurgeryController {
   @HttpCode(HttpStatus.OK)
   async findAll(
     @Res({ passthrough: true }) res: Response,
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number
+    @Query('range', new DefaultValuePipe([0, 10]), ParseJsonPipe)
+    range: [number, number]
   ): Promise<InfinityPaginationResultType<Surgery>> {
+    let limit = range[1] + 1 - range[0];
     if (limit > 50) limit = 50;
+    const page = range[0] / limit + 1;
 
     const [surgery, count] = await this.surgeryService.findManyWithPagination({
       page,
