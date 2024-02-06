@@ -50,6 +50,15 @@ const classificationMap = {
   "thaunat-greif": <ThaunatGrief />,
 };
 
+const classificationImagePath = {
+  "anderson-2011-meniscus-lesion": "",
+  "laprade-2015-medial-lateral-meniscus-root-rupture":
+    "classifications/laprade.jpeg",
+  "nguyen-2014-morphology-meniscus-lesion": "classifications/nguyen.jpeg",
+  "ramp-meniscus-lesion": "classifications/ramp-meniscus-lesion.jpeg",
+  "thaunat-greif": "classifications/thaunat.jpeg",
+};
+
 export const CreateClassification = () => {
   const { data, isLoading } = useGetList("patient");
   const [classification, setClassification] = useState("");
@@ -66,6 +75,11 @@ export const CreateClassification = () => {
       { type: "error" }
     );
   };
+
+  const imgSrc =
+    classificationImagePath[
+      classification as keyof typeof classificationImagePath
+    ];
 
   return (
     <Create mutationOptions={{ onSuccess, onError }}>
@@ -101,9 +115,28 @@ export const CreateClassification = () => {
                 required
               />
             </Grid>
-            {classificationMap[
-              classification as keyof typeof classificationMap
-            ] ?? (
+            {classification ? (
+              <>
+                {imgSrc && (
+                  <Grid item xs={12}>
+                    <img
+                      src={imgSrc}
+                      style={{
+                        width: "100%",
+                        height: "auto",
+                        maxHeight: 350,
+                        objectFit: "contain",
+                      }}
+                    />
+                  </Grid>
+                )}
+                {
+                  classificationMap[
+                    classification as keyof typeof classificationMap
+                  ]
+                }
+              </>
+            ) : (
               <Grid item xs={12}>
                 <Typography variant="body2">
                   Escolha uma classificação para preencher os detalhes!
